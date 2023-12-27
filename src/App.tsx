@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import logoImg from './resources/images/logo.png'
-import Chessboard from 'chessboardjsx';
-import WithMoveValidation from './WithMoveValidation';
+import ValidatedChessboard from './ValidatedChessboard';
 import StockfishWrapper from "./stockfish_wrapper"
 
 const App = () => {
@@ -33,7 +32,7 @@ const App = () => {
       </div>
       <div id="main">
         <div id="chessboard_div">
-        <WithMoveValidation />
+          <ValidatedChessboard />
         </div>
         <div id="feedback_div">
 
