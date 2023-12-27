@@ -1,11 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import logoImg from './resources/images/logo.png'
 import Chessboard from 'chessboardjsx';
 import WithMoveValidation from './WithMoveValidation';
+import StockfishWrapper from "./stockfish_wrapper"
 
-function App() {
+const App = () => {
+
+  const [bestMove, setBestMove] = useState<string>("")
+  const [boardPosition, setBoardPosition] = useState<string>("")
+  
+  const [stockfish_engine, set_stockfish_engine] = useState<StockfishWrapper>(new StockfishWrapper(setBestMove));
+
+  // instantiate stockfish engine
+  useEffect(() => {
+
+    stockfish_engine.init_sf()
+
+    return function quit_sf() {
+
+      stockfish_engine.sf_initialized = true
+
+    }
+
+  }, [])
+
   return (
     <div className="App">
       <div id="title">
