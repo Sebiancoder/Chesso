@@ -24,8 +24,6 @@ class StockfishWrapper{
 
             var recievedMessage: string = event.data;
 
-            console.log(recievedMessage)
-
             //switch statement to handle various response from the stockfish engine
             switch (recievedMessage) {
 
