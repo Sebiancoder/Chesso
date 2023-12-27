@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import logoImg from './resources/images/logo.png'
+import Chessboard from 'chessboardjsx';
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
       </div>
       <div id="main">
         <div id="chessboard_div">
-
+        <Chessboard position="start"/>
         </div>
         <div id="feedback_div">
 
