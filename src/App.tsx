@@ -5,21 +5,23 @@ import StockfishWrapper from "./stockfish_wrapper"
 
 const App = () => {
 
-  const [stockfish_engine, set_stockfish_engine] = useState<StockfishWrapper>();
-
-  const [pageLoaded, setPageLoaded] = useState<Boolean>(false);
+  const [bestMove, setBestMove] = useState<string>("")
+  const [boardPosition, setBoardPosition] = useState<string>("")
   
+  const [stockfish_engine, set_stockfish_engine] = useState<StockfishWrapper>(new StockfishWrapper(setBestMove));
+
+  // instantiate stockfish engine
   useEffect(() => {
 
-    if (!pageLoaded) {
+    stockfish_engine.init_sf()
 
-      set_stockfish_engine(new StockfishWrapper())
+    return function quit_sf() {
 
-      setPageLoaded(true)
+      stockfish_engine.sf_initialized = true
 
     }
 
-  }, []);
+  }, [])
 
   return (
     <div className="App">
