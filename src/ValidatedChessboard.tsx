@@ -1,22 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PromotionMenu from "./PromotionMenu"
 import Chessboard from "chessboardjsx";
 import { Chess, Square } from "chess.js";
 
-const ValidatedChessboard = () => {
-
-    const [chessValidator, setChessValidator] = useState<Chess>(new Chess());
+const ValidatedChessboard = (props: any) => {
 
     const [boardPosition, setBoardPosition] = useState<string>("start")
     
     //promotion related states
     const [promotionMenuOpen, setPromotionMenuOpen] = useState<boolean>(false)
     const [promoteMove, setPromoteMove] = useState<Array<string>>([])
-
+    
     //function to run on drag, to determine if drag is allowable
     const allowDrag = (move_desc: {piece: string, sourceSquare: string}): boolean  => {
 
-        var square_legal_moves: Array<string> = chessValidator.moves({square: move_desc.sourceSquare as Square})
+        var square_legal_moves: Array<string> = props.game_state.moves({square: move_desc.sourceSquare as Square})
 
         if (square_legal_moves.length == 0) {
 
@@ -33,7 +31,7 @@ const ValidatedChessboard = () => {
     //function to run on drop, to determine if move would be legal, and if so to perform such move
     const onDrop = (move_desc: {sourceSquare: string, targetSquare: string, piece: string}): void => {
 
-        var square_legal_moves: Array<string> = chessValidator.moves({square: move_desc.sourceSquare as Square});
+        var square_legal_moves: Array<string> = props.game_state.moves({square: move_desc.sourceSquare as Square});
 
         //associate target squares to the Chess move notation that would bring a piece there
         var legal_move_targets: {[key: string]: any} = {}
@@ -72,10 +70,10 @@ const ValidatedChessboard = () => {
             (typeof(legal_move_targets[move_desc.targetSquare]) == "string")) {
 
             //play the move
-            chessValidator.move(legal_move_targets[move_desc.targetSquare])
+            props.game_state.move(legal_move_targets[move_desc.targetSquare])
 
             //update chess board
-            setBoardPosition(chessValidator.fen())
+            setBoardPosition(props.game_state.fen())
 
         }
 
@@ -83,16 +81,16 @@ const ValidatedChessboard = () => {
         //short castle
         if ((move_desc.targetSquare == "g1" || move_desc.targetSquare == "g8") && square_legal_moves.includes('O-O')) {
 
-            chessValidator.move("O-O")
-            setBoardPosition(chessValidator.fen())
+            props.game_state.move("O-O")
+            setBoardPosition(props.game_state.fen())
 
         }
 
         //long castle
         if ((move_desc.targetSquare == "c1" || move_desc.targetSquare == "c8") && square_legal_moves.includes('O-O-O')) {
 
-            chessValidator.move("O-O-O")
-            setBoardPosition(chessValidator.fen())
+            props.game_state.move("O-O-O")
+            setBoardPosition(props.game_state.fen())
 
         }
 
@@ -114,14 +112,12 @@ const ValidatedChessboard = () => {
         
         var promoteChoice: string = clickTarget.id.slice(-1)
         
-        console.log(promoteMove)
-        
         promoteMove.forEach((pmov) => {
 
             if (promoteChoice == pmov.replace("+", "").replace("#", "").slice(-1)) {
 
-                chessValidator.move(pmov)
-                setBoardPosition(chessValidator.fen())
+                props.game_state.move(pmov)
+                setBoardPosition(props.game_state.fen())
 
             }
 
@@ -137,7 +133,7 @@ const ValidatedChessboard = () => {
                 <Chessboard
                     id="mainChessBoard" 
                     position={boardPosition}
-                    width={400}
+                    width={500}
                     allowDrag={allowDrag}
                     draggable={!promotionMenuOpen}
                     onDrop={onDrop}/>

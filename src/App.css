@@ -3,12 +3,15 @@
 /* Design Constants */
 :root {
 
-  --chessboard-width: 400px
+  --chessboard-width: 500px
 
 }
 
+/* Core Organizational Components */
+
 .App {
     text-align: center;
+    height: 100vh;
   }
   
   .App-logo {
@@ -20,7 +23,9 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     width: 100vw;
+    height: 10%;
   }
   
   .logoImg {
@@ -29,7 +34,41 @@
     margin: 15px;
   }
 
+  #main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 90%;
+  }
+
+  #titleText {
+    font-size: 50px;
+    margin: 0px;
+  }
+
+  /* For Mobile */
+  @media screen and (max-width: 949px) {
+
+  #main {
+    flex-direction: column;
+  }
+
+  }
+
   /* Chessboard css */
+  #chessboard_div {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    align-items: center;
+  }
+
+  #chessboardMain {
+    display: flex;
+    flex-direction: row;
+  }
+
   #chessInterface {
     position: relative;
   }
@@ -63,4 +102,36 @@
 
   .promoteMenuImg:hover {
     background: rgb(69,61,129);
+  }
+
+  /* For Mobile */
+  @media screen and (max-width: 949px) {
+
+    #chessboard_div {
+      width: 100%
+  
+    }
+  
+  }
+
+  /* Feedback CSS */
+  #feedback_div {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+  }
+
+  .feedbackText {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px;
+  }
+
+  /* For Mobile */
+  @media screen and (max-width: 949px) {
+
+    #feedback_div {
+      width: 100%
+    }
+  
   }
