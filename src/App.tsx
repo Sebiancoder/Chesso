@@ -1,49 +1,65 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import logoImg from './resources/images/logo.png'
+import { startFEN } from "./constants"
 import ValidatedChessboard from './ValidatedChessboard';
 import ChessOptions from './ChessOptions';
 import ChessHeader from './ChessHeader';
 import Feedback from './Feedback';
 import StockfishWrapper from "./stockfish_wrapper"
 import { Chess } from 'chess.js';
+import EvalBar from './EvalBar';
 
 const App = () => {
 
-  const [bestMove, setBestMove] = useState<string>("")
+  //chess game state
   const [gameState, setGameState] = useState<Chess>(new Chess());
+  const [bestMove, setBestMove] = useState<string>("")
+  const [currEvalScore, setCurrEvalScore] = useState<number>(0)
+  const [lastWhiteScore, setLastWhiteScore] = useState<number>(0)
+  const [lastBlackScore, setLastBlackScore] = useState<number>(0)
 
   //this variable is here to serve as a signal that the game state has changed, boardPosition can also be accessed thru gameState
   //when position changes gameState object will not change, so this variable is necessary to trigger certain listeners
-  const [boardPosition, setBoardPosition] = useState<string>("");
+  const [boardPosition, setBoardPosition] = useState<string>(startFEN);
   
+  // variables to track state of stockfish engine
   const [sfInit, setSfInit] = useState<boolean>(false);
   const [sfReady, setSfReady] = useState<boolean>(false);
+  const [engineCalculating, setEngineCalculating] = useState<boolean>(false)
+  
+  // stockfish engine
+  const [stockfish_engine, set_stockfish_engine] = useState<StockfishWrapper>();
 
-  const [stockfish_engine, set_stockfish_engine] = useState<StockfishWrapper>(new StockfishWrapper(
-    sfReady,
-    setSfReady,
-    setSfInit,
-    setBestMove
-  ));
-
-  // instantiate stockfish engine
+  //page load tasks
   useEffect(() => {
-
-    stockfish_engine.init_sf()
-
-    return function quit_sf_initialization() {
-
-      stockfish_engine.sf_initialized = true
+    
+    if (!stockfish_engine) {
+      
+      // instantiate stockfish engine
+      set_stockfish_engine(new StockfishWrapper(
+        setSfReady,
+        setSfInit,
+        setBestMove,
+        setCurrEvalScore,
+        setEngineCalculating
+        ))
 
     }
 
   }, [])
 
-  // if stockfish is initialized, send a message to check if it is ready
+  //when the stockfish wrapper, is instantiated, initialize the stockfish engine
   useEffect(() => {
 
-    if(sfInit) {
+    stockfish_engine?.init_sf()
+
+  }, [stockfish_engine])
+
+  // when stockfish is initialized, send a message to check if it is ready
+  useEffect(() => {
+
+    if(stockfish_engine && sfInit) {
 
       stockfish_engine.check_ready()
 
@@ -51,12 +67,13 @@ const App = () => {
 
   }, [sfInit])
 
-  // if it is ready, tell it that a new game is initiated
+  // if the ready state changed, start calculating new moves
   useEffect(() => {
 
-    if(sfReady) {
+    if(stockfish_engine && sfReady) {
 
-      stockfish_engine.set_analyze_mode(true)
+      setEngineCalculating(true)
+      stockfish_engine.start_analysis(20)
 
     }
 
@@ -67,8 +84,27 @@ const App = () => {
 
     setBoardPosition(boardPosition)
 
-    stockfish_engine.new_game()
-    stockfish_engine.start_analysis(boardPosition, 20)
+    // prev Eval as curr Eval
+    if (gameState.turn() === "w") {
+
+      setLastBlackScore(currEvalScore)
+
+    } else {
+
+      setLastWhiteScore(currEvalScore)
+
+    }
+    
+    //if stockfish engine initialized, set up position in stockfish engine
+    if (stockfish_engine && sfInit) {
+
+      setSfReady(false)
+      stockfish_engine.new_game()
+      stockfish_engine.set_analyze_mode(true)
+      stockfish_engine.set_position(boardPosition)
+      stockfish_engine.check_ready()
+
+    }
 
   }
 
@@ -93,6 +129,7 @@ const App = () => {
           <div id="chessboardMain">
             <ChessOptions on_reset={reset_game}/>
             <ValidatedChessboard game_state={gameState} on_board_position_change={on_board_state_change}/>
+            <EvalBar eval={currEvalScore} turn={gameState.turn()}/>
           </div>
         </div>
         <div id="feedback_div">
@@ -102,6 +139,9 @@ const App = () => {
             best_move={bestMove} 
             />
           <p>{bestMove}</p>
+          <p>curr {currEvalScore}</p>
+          <p>prevWhite {lastWhiteScore}</p>
+          <p>prevBlack {lastBlackScore}</p>
         </div>
       </div>
     </div>

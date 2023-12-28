@@ -13,6 +13,7 @@ const Feedback = (props: any) => {
     return (
         <div>
             <p className="feedbackText">{currFeedback}</p>
+            <p>{props.game_state_change_signal}</p>
         </div>
     )
 
