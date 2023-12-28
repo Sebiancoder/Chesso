@@ -1,6 +1,6 @@
 import React from "react";
 
-const ChessOptions = () => {
+const ChessOptions = (props: any) => {
 
     return (
         <div id="chessOptions">
