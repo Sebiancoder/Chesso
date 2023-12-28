@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PromotionMenu from "./PromotionMenu"
 import Chessboard from "chessboardjsx";
-import { Chess, Square } from "chess.js";
+import { Square } from "chess.js";
 
 const ValidatedChessboard = (props: any) => {
 
@@ -10,13 +10,20 @@ const ValidatedChessboard = (props: any) => {
     //promotion related states
     const [promotionMenuOpen, setPromotionMenuOpen] = useState<boolean>(false)
     const [promoteMove, setPromoteMove] = useState<Array<string>>([])
+
+    //call passed in function on game position state
+    useEffect(() => {
+
+        props.on_board_position_change(boardPosition)
+
+    }, [boardPosition])
     
     //function to run on drag, to determine if drag is allowable
     const allowDrag = (move_desc: {piece: string, sourceSquare: string}): boolean  => {
 
         var square_legal_moves: Array<string> = props.game_state.moves({square: move_desc.sourceSquare as Square})
 
-        if (square_legal_moves.length == 0) {
+        if (square_legal_moves.length === 0) {
 
             return false;
 
@@ -79,7 +86,7 @@ const ValidatedChessboard = (props: any) => {
 
         //castling edge cases
         //short castle
-        if ((move_desc.targetSquare == "g1" || move_desc.targetSquare == "g8") && square_legal_moves.includes('O-O')) {
+        if ((move_desc.targetSquare === "g1" || move_desc.targetSquare === "g8") && square_legal_moves.includes('O-O')) {
 
             props.game_state.move("O-O")
             setBoardPosition(props.game_state.fen())
@@ -87,7 +94,7 @@ const ValidatedChessboard = (props: any) => {
         }
 
         //long castle
-        if ((move_desc.targetSquare == "c1" || move_desc.targetSquare == "c8") && square_legal_moves.includes('O-O-O')) {
+        if ((move_desc.targetSquare === "c1" || move_desc.targetSquare === "c8") && square_legal_moves.includes('O-O-O')) {
 
             props.game_state.move("O-O-O")
             setBoardPosition(props.game_state.fen())
@@ -95,7 +102,7 @@ const ValidatedChessboard = (props: any) => {
         }
 
         //promotion edge case
-        if (move_desc.piece[1] == 'P' && ((move_desc.piece[0] === "w" && move_desc.targetSquare[1] === "8") || 
+        if (move_desc.piece[1] === 'P' && ((move_desc.piece[0] === "w" && move_desc.targetSquare[1] === "8") || 
             (move_desc.piece[0] === "b" && move_desc.targetSquare[1] === "1"))) {
 
                 setPromoteMove(legal_move_targets[move_desc.targetSquare])
@@ -114,7 +121,7 @@ const ValidatedChessboard = (props: any) => {
         
         promoteMove.forEach((pmov) => {
 
-            if (promoteChoice == pmov.replace("+", "").replace("#", "").slice(-1)) {
+            if (promoteChoice === pmov.replace("+", "").replace("#", "").slice(-1)) {
 
                 props.game_state.move(pmov)
                 setBoardPosition(props.game_state.fen())
