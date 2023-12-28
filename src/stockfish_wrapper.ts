@@ -14,12 +14,14 @@ class StockfishWrapper{
     set_sf_init: Dispatch<SetStateAction<boolean>>
     set_best_move: Dispatch<SetStateAction<string>>
     set_curr_eval: Dispatch<SetStateAction<number>>
+    set_engine_calc: Dispatch<SetStateAction<boolean>>
 
     constructor(
         setSfReady: Dispatch<SetStateAction<boolean>>,
         setSfInit: Dispatch<SetStateAction<boolean>>,
         set_best_move: Dispatch<SetStateAction<string>>,
-        set_curr_eval: Dispatch<SetStateAction<number>>
+        set_curr_eval: Dispatch<SetStateAction<number>>,
+        set_engine_calc: Dispatch<SetStateAction<boolean>>
         ) {
 
         this.sf_worker = new Worker("/stockfish.js");
@@ -29,6 +31,7 @@ class StockfishWrapper{
         this.set_sf_init = setSfInit;
         this.set_best_move = set_best_move
         this.set_curr_eval = set_curr_eval
+        this.set_engine_calc = set_engine_calc
 
         //define the listener for handling response from stockfish
         this.sf_worker_listener = (event: MessageEvent) => {
@@ -49,12 +52,22 @@ class StockfishWrapper{
             } else if(recievedMessage.slice(0, 8) === "bestmove") {
 
                 this.set_best_move(recievedMessage.split(" ")[1])
+                this.set_engine_calc(false)
+
+                //after best move recieved, trigger an evaluation request
+                this.static_eval()
 
             } else if(recievedMessage.slice(0, 4) === "info") {
 
                 var info_objs: Array<string> = recievedMessage.split(" ")
 
-                this.set_curr_eval(parseInt(info_objs[9]))
+                var score: number = parseInt(info_objs[9])
+
+                this.set_curr_eval(score)
+
+            } else if(recievedMessage.slice(0, 16) === "Total evaluation") {
+
+                //this.set_curr_eval(parseFloat(recievedMessage.split(" ")[2]))
 
             }
 
@@ -132,6 +145,13 @@ class StockfishWrapper{
 
         console.log("starting analysis")
         this.sf_worker.postMessage("go depth " + depth.toString())
+
+    }
+
+    //get static evaluation of position
+    static_eval() {
+
+        this.sf_worker.postMessage("eval")
 
     }
 

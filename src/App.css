@@ -3,7 +3,7 @@
 /* Design Constants */
 :root {
 
-  --chessboard-width: 500px
+  --chessboard-size: 500px
 
 }
 
@@ -81,7 +81,7 @@
     position: absolute;
     top: 100px;
     z-index: 10;
-    width: var(--chessboard-width);
+    width: var(--chessboard-size);
     background-color: rgba(255,143,88, 0.8);
     display: flex;
     flex-direction: row;
@@ -112,6 +112,20 @@
   
     }
   
+  }
+
+  /* Chessboard Adjacent components */
+  #evalBar{
+    height: var(--chessboard-size);
+    background-color: lightgray;
+    width: calc(var(--chessboard-size) / 16);
+    margin-left: 10px;
+  }
+
+  #blackEvalFill{
+    background-color: darkgray;
+    width: 100%;
+    transition: height 1s;
   }
 
   /* Feedback CSS */
