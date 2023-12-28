@@ -1,12 +1,17 @@
 import React, { useState } from "react";
+import PromotionMenu from "./PromotionMenu"
 import Chessboard from "chessboardjsx";
-import { Chess, Square } from "chess.js"
+import { Chess, Square } from "chess.js";
 
 const ValidatedChessboard = () => {
 
     const [chessValidator, setChessValidator] = useState<Chess>(new Chess());
 
     const [boardPosition, setBoardPosition] = useState<string>("start")
+    
+    //promotion related states
+    const [promotionMenuOpen, setPromotionMenuOpen] = useState<boolean>(false)
+    const [promoteMove, setPromoteMove] = useState<Array<string>>([])
 
     //function to run on drag, to determine if drag is allowable
     const allowDrag = (move_desc: {piece: string, sourceSquare: string}): boolean  => {
@@ -31,23 +36,40 @@ const ValidatedChessboard = () => {
         var square_legal_moves: Array<string> = chessValidator.moves({square: move_desc.sourceSquare as Square});
 
         //associate target squares to the Chess move notation that would bring a piece there
-        var legal_move_targets: {[key: string]: string} = {}
+        var legal_move_targets: {[key: string]: any} = {}
 
         //for each legal move
         square_legal_moves.forEach((slm) => {
-
+            
             //get square piece would move to
-            var move_target: string = slm.replace("+", "").replace("#", "").slice(-2)
+            var move_target: string = slm.replace("+", "").replace("#", "").split("=")[0].slice(-2)
 
-            legal_move_targets[move_target] = slm
+            if (slm.includes("=")) {
+
+                //in the case that the move involves a promotion, we want to account for all possible promotions on that square
+                //this is the unique case where a sourceSquare and targetSquare does not uniquely identify a move
+
+                if (move_target in legal_move_targets) {
+
+                    legal_move_targets[move_target].push(slm)
+
+                } else {
+
+                    legal_move_targets[move_target] = [slm]
+
+                }
+
+            } else {
+
+                legal_move_targets[move_target] = slm
+
+            }
 
         })
 
-        console.log(square_legal_moves)
-        console.log(legal_move_targets)
-
-        //check if target we are attempting to move to has a valid move associated with it
-        if (move_desc.targetSquare in legal_move_targets) {
+        //check if target we are attempting to move to has a valid move associated with it, and that it is not a promotion move
+        if (move_desc.targetSquare in legal_move_targets && 
+            (typeof(legal_move_targets[move_desc.targetSquare]) == "string")) {
 
             //play the move
             chessValidator.move(legal_move_targets[move_desc.targetSquare])
@@ -74,14 +96,55 @@ const ValidatedChessboard = () => {
 
         }
 
+        //promotion edge case
+        if (move_desc.piece[1] == 'P' && ((move_desc.piece[0] === "w" && move_desc.targetSquare[1] === "8") || 
+            (move_desc.piece[0] === "b" && move_desc.targetSquare[1] === "1"))) {
+
+                setPromoteMove(legal_move_targets[move_desc.targetSquare])
+                setPromotionMenuOpen(true)
+
+        }
+
+    }
+
+    //function to run when a pawn promotion is occuring
+    const onPromote = (clickEvent: Event): void => {
+
+        var clickTarget: HTMLElement = clickEvent.currentTarget as HTMLElement
+        
+        var promoteChoice: string = clickTarget.id.slice(-1)
+        
+        console.log(promoteMove)
+        
+        promoteMove.forEach((pmov) => {
+
+            if (promoteChoice == pmov.replace("+", "").replace("#", "").slice(-1)) {
+
+                chessValidator.move(pmov)
+                setBoardPosition(chessValidator.fen())
+
+            }
+
+        })
+
+        setPromotionMenuOpen(false)
+
     }
 
     return (
-        <Chessboard 
-            position={boardPosition}
-            width={300}
-            allowDrag={allowDrag}
-            onDrop={onDrop}/>
+        <div>
+            <div id="chessInterface">
+                <Chessboard
+                    id="mainChessBoard" 
+                    position={boardPosition}
+                    width={400}
+                    allowDrag={allowDrag}
+                    draggable={!promotionMenuOpen}
+                    onDrop={onDrop}/>
+                {promotionMenuOpen ? <PromotionMenu promSetter={onPromote}/> : ""}
+            </div>
+            
+        </div>
     );
 
 }
