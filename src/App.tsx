@@ -123,10 +123,11 @@ const App = () => {
       </div>
       <div id="main">
         <div id="chessboard_div">
-          <ChessHeader game_state={gameState}/>
+          <ChessHeader 
+          game_state={gameState} 
+          game_state_change_signal={boardPosition}/>
           <div id="chessboardMain">
-            <ChessOptions
-              on_reset={reset_game}/>
+            <ChessOptions on_reset={reset_game}/>
             <ValidatedChessboard game_state={gameState} on_board_position_change={on_board_state_change}/>
             <EvalBar eval={currEvalScore} turn={gameState.turn()}/>
           </div>
