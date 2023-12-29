@@ -128,7 +128,7 @@
   }
 
   #blackEvalFill{
-    background-color: darkgray;
+    background-color: rgb(86, 86, 86);
     width: 100%;
     transition: height 1s;
   }
