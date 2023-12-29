@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import logoImg from './resources/images/logo.png'
+import gearsImg from './resources/images/settings-gears.png'
 import { startFEN } from "./constants"
 import ValidatedChessboard from './ValidatedChessboard';
 import ChessOptions from './ChessOptions';
@@ -14,10 +15,10 @@ const App = () => {
 
   //chess game state
   const [gameState, setGameState] = useState<Chess>(new Chess());
-  const [bestMove, setBestMove] = useState<string>("")
-  const [currEvalScore, setCurrEvalScore] = useState<number>(0)
-  const [lastWhiteScore, setLastWhiteScore] = useState<number>(0)
-  const [lastBlackScore, setLastBlackScore] = useState<number>(0)
+  const [bestMove, setBestMove] = useState<string>("");
+  const [currEvalScore, setCurrEvalScore] = useState<number>(0);
+  const [prevEvalScore, setPrevEvalScore] = useState<number>(0);
+  const [mate, setMate] = useState<number>(-1)
 
   //this variable is here to serve as a signal that the game state has changed, boardPosition can also be accessed thru gameState
   //when position changes gameState object will not change, so this variable is necessary to trigger certain listeners
@@ -38,11 +39,13 @@ const App = () => {
       
       // instantiate stockfish engine
       set_stockfish_engine(new StockfishWrapper(
+        gameState,
         setSfReady,
         setSfInit,
         setBestMove,
         setCurrEvalScore,
-        setEngineCalculating
+        setEngineCalculating,
+        setMate
         ))
 
     }
@@ -85,13 +88,13 @@ const App = () => {
     setBoardPosition(boardPosition)
 
     // prev Eval as curr Eval
-    if (gameState.turn() === "w") {
+    if (gameState.turn() === "b") {
 
-      setLastBlackScore(currEvalScore)
+      setPrevEvalScore(currEvalScore)
 
     } else {
 
-      setLastWhiteScore(currEvalScore)
+      setPrevEvalScore(currEvalScore)
 
     }
     
@@ -129,19 +132,31 @@ const App = () => {
           <div id="chessboardMain">
             <ChessOptions on_reset={reset_game}/>
             <ValidatedChessboard game_state={gameState} on_board_position_change={on_board_state_change}/>
-            <EvalBar eval={currEvalScore} turn={gameState.turn()}/>
+            <EvalBar eval={currEvalScore} mate_on_board={mate} turn={gameState.turn()} mate={gameState.isCheckmate()}/>
           </div>
         </div>
         <div id="feedback_div">
-          <Feedback
-            game_state={gameState}
-            game_state_change_signal={boardPosition}
-            best_move={bestMove} 
-            />
+          {(engineCalculating && (boardPosition != "start")) ? 
+            (
+              <div id="analysePos">
+                <img width={100} src={gearsImg}/>
+                <p className='feedbackText'>Analyzing Position ... </p>
+              </div>
+            ) : 
+            (<Feedback
+              game_state={gameState}
+              game_state_change_signal={boardPosition}
+              best_move={bestMove}
+              curr_score={currEvalScore}
+              prev_score={prevEvalScore}
+              engine_calc={engineCalculating} 
+              />)
+          }
+          
           <p>{bestMove}</p>
           <p>curr {currEvalScore}</p>
-          <p>prevWhite {lastWhiteScore}</p>
-          <p>prevBlack {lastBlackScore}</p>
+          <p>mate {mate}</p>
+          <p>prev {prevEvalScore}</p>
         </div>
       </div>
     </div>

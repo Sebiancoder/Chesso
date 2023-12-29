@@ -1,3 +1,4 @@
+import { Chess } from "chess.js"
 import { Dispatch, SetStateAction } from "react"
 
 // class to interface with stockfish chess engine
@@ -9,29 +10,39 @@ class StockfishWrapper{
     //handler for messages from web worker
     sf_worker_listener: (this: Worker, ev: MessageEvent<any>) => any
 
+    //reference to game state
+    game_state: Chess
+    
     //methods to update web app state, passed in to constructor
     set_sf_ready: Dispatch<SetStateAction<boolean>>
     set_sf_init: Dispatch<SetStateAction<boolean>>
     set_best_move: Dispatch<SetStateAction<string>>
     set_curr_eval: Dispatch<SetStateAction<number>>
     set_engine_calc: Dispatch<SetStateAction<boolean>>
+    set_mate: Dispatch<SetStateAction<number>>
 
     constructor(
+        game_state: Chess,
         setSfReady: Dispatch<SetStateAction<boolean>>,
         setSfInit: Dispatch<SetStateAction<boolean>>,
         set_best_move: Dispatch<SetStateAction<string>>,
         set_curr_eval: Dispatch<SetStateAction<number>>,
-        set_engine_calc: Dispatch<SetStateAction<boolean>>
+        set_engine_calc: Dispatch<SetStateAction<boolean>>,
+        set_mate: Dispatch<SetStateAction<number>>
         ) {
 
         this.sf_worker = new Worker("/stockfish.js");
 
+        //set game state variable
+        this.game_state = game_state
+
         //set functions to update web app state
         this.set_sf_ready = setSfReady;
         this.set_sf_init = setSfInit;
-        this.set_best_move = set_best_move
-        this.set_curr_eval = set_curr_eval
-        this.set_engine_calc = set_engine_calc
+        this.set_best_move = set_best_move;
+        this.set_curr_eval = set_curr_eval;
+        this.set_engine_calc = set_engine_calc;
+        this.set_mate = set_mate;
 
         //define the listener for handling response from stockfish
         this.sf_worker_listener = (event: MessageEvent) => {
@@ -54,16 +65,30 @@ class StockfishWrapper{
                 this.set_best_move(recievedMessage.split(" ")[1])
                 this.set_engine_calc(false)
 
-                //after best move recieved, trigger an evaluation request
-                this.static_eval()
-
             } else if(recievedMessage.slice(0, 4) === "info") {
 
                 var info_objs: Array<string> = recievedMessage.split(" ")
 
+                var mate: boolean = (info_objs[8] === "mate")
                 var score: number = parseInt(info_objs[9])
 
-                this.set_curr_eval(score)
+                if (mate) {
+
+                    this.set_mate(score)
+
+                } else {
+
+                    if (game_state.turn() === "b") {
+
+                        this.set_curr_eval(score * -1)
+
+                    } else {
+
+                        this.set_curr_eval(score)
+
+                    }
+
+                }
 
             } else if(recievedMessage.slice(0, 16) === "Total evaluation") {
 
