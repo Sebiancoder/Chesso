@@ -146,7 +146,6 @@ const App = () => {
             (<Feedback
               game_state={gameState}
               game_state_change_signal={boardPosition}
-              best_move={bestMove}
               curr_score={currEvalScore}
               prev_score={prevEvalScore}
               engine_calc={engineCalculating} 
