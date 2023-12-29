@@ -3,35 +3,31 @@ import './ChessHeader.css'
 const ChessHeader = (props: any) => {
 
     const [currTurn, setCurrTurn] = useState<string>("");
+
     useEffect(() => {
-        console.log(currTurn);
+
         setCurrTurn(props.game_state.turn())
+
     }, [props])
-    // console.log(currTurn);
-    // var curr_player: string = "It's white's turn";
-    // if (currTurn == 'w') {
-    //     curr_player = "It's white's turn";
-    // } else if (currTurn == 'b'){
-    //     curr_player = "It's black's turn";
-    // }
+    
     return (
         <div>
-            <p>{
+            {
                 //props.game_state.turn()
                 props.game_state.isGameOver() ?
                 props.game_state.isCheckmate() ?
                 currTurn == 'w' ?
-                <p id="black"> Black has checkmated white </p> : <p id="white"> White has checkmated black! </p>
+                <p id="black"> Black Wins By Checkmate! </p> : <p id="white"> White Wins By Checkmate! </p>
                 : props.game_state.isThreefoldRepetition() ?
-                <p id="gray"> Game drawn due to threefold repetition </p> :
+                <p id="gray"> Game Drawn By Threefold Repetition </p> :
                 props.game_state.isStalemate() ?
-                <p id="gray"> Game drawn due to stalemate </p> :
+                <p id="gray"> Game Drawn By Stalemate </p> :
                 props.game_state.isInsufficientMaterial() ?
-                <p id="gray"> Game drawn due to insufficient material </p> :
-                props.game_state.isDraw() ? <p id="gray"> Game drawn due to 50-move rule </p> :
+                <p id="gray"> Game Drawn By Insufficient Material </p> :
+                props.game_state.isDraw() ? <p id="gray"> Game Drawn By 50-move Rule </p> :
                 <p id="gray"> Game Over </p> : 
-                currTurn == 'w' ? <p id="white"> White to move </p>: 
-                <p id="black"> Black to move </p>
+                currTurn == 'w' ? <p id="white"> White to Move </p>: 
+                <p id="black"> Black to Move </p>
 
                 // currTurn == 'w' ? "White to move" : props.game_state.isGameOver() 
                 // ? props.game_state.isCheckmate()
@@ -40,7 +36,7 @@ const ChessHeader = (props: any) => {
                 // : "Black has checkmated white!"
                 // ? "Game Over!" :  "Black to move"
                 //props.game_state.isGameOver() ? "Game Over!" :  currTurn
-            }</p>
+            }
         </div>
     )
 
