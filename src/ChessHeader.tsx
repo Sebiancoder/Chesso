@@ -13,7 +13,6 @@ const ChessHeader = (props: any) => {
     return (
         <div>
             {
-                //props.game_state.turn()
                 props.game_state.isGameOver() ?
                 props.game_state.isCheckmate() ?
                 currTurn == 'w' ?
@@ -28,14 +27,6 @@ const ChessHeader = (props: any) => {
                 <p id="gray"> Game Over </p> : 
                 currTurn == 'w' ? <p id="white"> White to Move </p>: 
                 <p id="black"> Black to Move </p>
-
-                // currTurn == 'w' ? "White to move" : props.game_state.isGameOver() 
-                // ? props.game_state.isCheckmate()
-                // ? currTurn == 'w'
-                // ? "White has checkmated black!"
-                // : "Black has checkmated white!"
-                // ? "Game Over!" :  "Black to move"
-                //props.game_state.isGameOver() ? "Game Over!" :  currTurn
             }
         </div>
     )
