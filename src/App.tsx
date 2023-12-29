@@ -129,6 +129,12 @@ const App = () => {
     setIsEvalBarVisible(true);
   }
 
+  //undo last move
+  const handleUndo = (): void => {
+    gameState.undo();
+    setBoardPosition(gameState.fen());
+  }
+
   return (
     <div className="App">
       <div id="title">
@@ -141,7 +147,7 @@ const App = () => {
           game_state={gameState} 
           game_state_change_signal={boardPosition}/>
           <div id="chessboardMain">
-            <ChessOptions reset={reset_game} onToggleEvalBar={handleToggleEvalBar} isVisible={isEvalBarVisible}/>
+            <ChessOptions undo={handleUndo} reset={reset_game} onToggleEvalBar={handleToggleEvalBar} isVisible={isEvalBarVisible}/>
             <ValidatedChessboard board_pos={boardPosition} set_board_pos={setBoardPosition} game_state={gameState} on_board_position_change={on_board_state_change}/>
             <EvalBar eval={currEvalScore} mate_on_board={mate} turn={gameState.turn()} mate={gameState.isCheckmate()} isVisible={isEvalBarVisible}/>
           </div>

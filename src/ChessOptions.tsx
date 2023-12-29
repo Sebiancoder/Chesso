@@ -7,6 +7,7 @@ const ChessOptions = (props: any) => {
         <div id="chessOptions">
             <button id="btn1" onClick={props.onToggleEvalBar}>{props.isVisible ? 'Hide Eval Bar' : 'Show Eval Bar'}</button>
             <button id="btn2" onClick={props.reset}>Reset Game</button>
+            <button id="undo" onClick={props.undo}>Undo Last Move</button>
         </div>
     )
 
