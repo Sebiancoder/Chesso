@@ -12,6 +12,7 @@
 .App {
     text-align: center;
     height: 100vh;
+    background-color:rgb(21, 22, 24);
   }
   
   .App-logo {
@@ -26,6 +27,8 @@
     align-items: center;
     width: 100vw;
     height: 10%;
+    border-style: solid;
+    border-color: rgb(44, 43, 43);
   }
   
   .logoImg {
@@ -45,6 +48,7 @@
   #titleText {
     font-size: 50px;
     margin: 0px;
+    color: white;
   }
 
   /* For Mobile */
@@ -133,12 +137,14 @@
     display: flex;
     flex-direction: column;
     width: 50%;
+    color: white;
   }
 
   .feedbackText {
     font-size: 20px;
     font-weight: bold;
     margin: 20px;
+    color: white;
   }
 
   #analysePosition {
