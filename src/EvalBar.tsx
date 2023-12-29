@@ -59,7 +59,7 @@ const EvalBar = (props: any) => {
     }, [props.eval, props.mate, props.mate_on_board])
     
     return (
-        <div id="evalBar">
+        <div style={{ display: props.isVisible ? 'block' : 'none' }} id="evalBar">
             <div id="blackEvalFill" style={
                 {height: barHeight.toString() + "%"}
                 }>
