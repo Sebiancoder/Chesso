@@ -163,17 +163,11 @@ const App = () => {
             (<Feedback
               game_state={gameState}
               game_state_change_signal={boardPosition}
-              best_move={bestMove}
               curr_score={currEvalScore}
               prev_score={prevEvalScore}
               engine_calc={engineCalculating} 
               />)
           }
-          
-          <p>{bestMove}</p>
-          <p>curr {currEvalScore}</p>
-          <p>mate {mate}</p>
-          <p>prev {prevEvalScore}</p>
         </div>
       </div>
     </div>
