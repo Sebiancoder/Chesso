@@ -1,5 +1,6 @@
-#btn {
+#btn1 {
 background-color: #04AA6D; /* Green */
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 border: none;
 border-radius: 7px;
 color: white;
@@ -11,4 +12,25 @@ text-align: center;
 text-decoration: none;
 display: inline-block;
 font-size: 14px;
+}
+#btn1:hover {
+background-color: #16cd8a; /* Green */
+}
+#btn2 {
+background-color: #3ac7b6; /* Green */
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+border: none;
+border-radius: 7px;
+color: white;
+margin-left: 30px;
+margin-right: 30px;
+margin-top: 50px;
+padding: 10px 20px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 14px;
+}
+#btn2:hover {
+background-color: #5ad5c6; /* Green */
 }

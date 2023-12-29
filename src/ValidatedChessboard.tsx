@@ -4,8 +4,6 @@ import Chessboard from "chessboardjsx";
 import { Square } from "chess.js";
 
 const ValidatedChessboard = (props: any) => {
-
-    const [boardPosition, setBoardPosition] = useState<string>("start")
     
     //promotion related states
     const [promotionMenuOpen, setPromotionMenuOpen] = useState<boolean>(false)
@@ -14,9 +12,9 @@ const ValidatedChessboard = (props: any) => {
     //call passed in function on game position state
     useEffect(() => {
 
-        props.on_board_position_change(boardPosition)
+        props.on_board_position_change(props.board_pos)
 
-    }, [boardPosition])
+    }, [props.board_pos])
     
     //function to run on drag, to determine if drag is allowable
     const allowDrag = (move_desc: {piece: string, sourceSquare: string}): boolean  => {
@@ -80,7 +78,7 @@ const ValidatedChessboard = (props: any) => {
             props.game_state.move(legal_move_targets[move_desc.targetSquare])
 
             //update chess board
-            setBoardPosition(props.game_state.fen())
+            props.set_board_pos(props.game_state.fen())
 
         }
 
@@ -89,7 +87,7 @@ const ValidatedChessboard = (props: any) => {
         if ((move_desc.targetSquare === "g1" || move_desc.targetSquare === "g8") && square_legal_moves.includes('O-O')) {
 
             props.game_state.move("O-O")
-            setBoardPosition(props.game_state.fen())
+            props.set_board_pos(props.game_state.fen())
 
         }
 
@@ -97,7 +95,7 @@ const ValidatedChessboard = (props: any) => {
         if ((move_desc.targetSquare === "c1" || move_desc.targetSquare === "c8") && square_legal_moves.includes('O-O-O')) {
 
             props.game_state.move("O-O-O")
-            setBoardPosition(props.game_state.fen())
+            props.set_board_pos(props.game_state.fen())
 
         }
 
@@ -124,7 +122,7 @@ const ValidatedChessboard = (props: any) => {
             if (promoteChoice === pmov.replace("+", "").replace("#", "").slice(-1)) {
 
                 props.game_state.move(pmov)
-                setBoardPosition(props.game_state.fen())
+                props.set_board_pos(props.game_state.fen())
 
             }
 
@@ -139,7 +137,7 @@ const ValidatedChessboard = (props: any) => {
             <div id="chessInterface">
                 <Chessboard
                     id="mainChessBoard" 
-                    position={boardPosition}
+                    position={props.board_pos}
                     width={500}
                     allowDrag={allowDrag}
                     draggable={!promotionMenuOpen}

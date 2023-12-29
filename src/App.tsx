@@ -117,9 +117,16 @@ const App = () => {
 
   //reset game
   const reset_game = (): void => {
-
-
-
+    setGameState(new Chess());
+    setBestMove("");
+    setCurrEvalScore(0);
+    setPrevEvalScore(0);
+    setBoardPosition(startFEN);
+    setMate(-1);
+    setSfInit(false);
+    setSfReady(false);
+    setEngineCalculating(false);
+    setIsEvalBarVisible(true);
   }
 
   return (
@@ -134,8 +141,8 @@ const App = () => {
           game_state={gameState} 
           game_state_change_signal={boardPosition}/>
           <div id="chessboardMain">
-            <ChessOptions on_reset={reset_game} onToggleEvalBar={handleToggleEvalBar} isVisible={isEvalBarVisible}/>
-            <ValidatedChessboard game_state={gameState} on_board_position_change={on_board_state_change}/>
+            <ChessOptions reset={reset_game} onToggleEvalBar={handleToggleEvalBar} isVisible={isEvalBarVisible}/>
+            <ValidatedChessboard board_pos={boardPosition} set_board_pos={setBoardPosition} game_state={gameState} on_board_position_change={on_board_state_change}/>
             <EvalBar eval={currEvalScore} mate_on_board={mate} turn={gameState.turn()} mate={gameState.isCheckmate()} isVisible={isEvalBarVisible}/>
           </div>
         </div>
