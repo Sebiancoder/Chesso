@@ -1,10 +1,14 @@
-import React from "react";
-
+import './ChessOptions.css';
+import EvalBar from './EvalBar';
+import React, { useEffect, useState} from "react";
 const ChessOptions = (props: any) => {
-
+    // const [isVisible, setIsVisible] = useState<boolean>(true);
+    // const toggleVisibility = () => {
+    //     setIsVisible(!isVisible);
+    //   };
     return (
         <div id="chessOptions">
-            <h5>Options</h5>
+            <button id="btn" onClick={props.onToggleEvalBar}>{props.isVisible ? 'Hide Eval Bar' : 'Show Eval Bar'}</button>
         </div>
     )
 

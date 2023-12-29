@@ -30,7 +30,8 @@ const App = () => {
   
   // stockfish engine
   const [stockfish_engine, set_stockfish_engine] = useState<StockfishWrapper>();
-
+  //sets eval bar visibility
+  const [isEvalBarVisible, setIsEvalBarVisible] = useState(true);
   //page load tasks
   useEffect(() => {
     
@@ -107,6 +108,9 @@ const App = () => {
     }
 
   }
+  const handleToggleEvalBar = (): void => {
+    setIsEvalBarVisible(!isEvalBarVisible);
+  }
 
   //reset game
   const reset_game = (): void => {
@@ -127,9 +131,9 @@ const App = () => {
           game_state={gameState} 
           game_state_change_signal={boardPosition}/>
           <div id="chessboardMain">
-            <ChessOptions on_reset={reset_game}/>
+            <ChessOptions on_reset={reset_game} onToggleEvalBar={handleToggleEvalBar} isVisible={isEvalBarVisible}/>
             <ValidatedChessboard game_state={gameState} on_board_position_change={on_board_state_change}/>
-            <EvalBar eval={currEvalScore} turn={gameState.turn()}/>
+            <EvalBar eval={currEvalScore} turn={gameState.turn()} isVisible={isEvalBarVisible}/>
           </div>
         </div>
         <div id="feedback_div">

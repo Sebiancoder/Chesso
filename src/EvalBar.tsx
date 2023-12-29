@@ -26,7 +26,7 @@ const EvalBar = (props: any) => {
     }, [props.eval])
     
     return (
-        <div id="evalBar">
+        <div style={{ display: props.isVisible ? 'block' : 'none' }} id="evalBar">
             <div id="blackEvalFill" style={
                 {height: barHeight.toString() + "%"}
                 }>
