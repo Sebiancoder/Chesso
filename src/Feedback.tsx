@@ -49,7 +49,6 @@ const Feedback = (props: any) => {
     return (
         <div>
             <p className="feedbackText">{currFeedback}</p>
-            <p>{llmWrapper?.toString()}</p>
         </div>
     )
 

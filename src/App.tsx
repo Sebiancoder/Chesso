@@ -168,11 +168,6 @@ const App = () => {
               engine_calc={engineCalculating} 
               />)
           }
-          
-          <p>{bestMove}</p>
-          <p>curr {currEvalScore}</p>
-          <p>mate {mate}</p>
-          <p>prev {prevEvalScore}</p>
         </div>
       </div>
     </div>
