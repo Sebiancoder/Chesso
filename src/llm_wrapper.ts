@@ -2,6 +2,7 @@ import { PromptTemplate } from "langchain/prompts";
 import OAI_KEY from "./resources/secrets/oai_key"
 import { OpenAI } from "langchain/llms/openai";
 import { Dispatch, SetStateAction } from "react";
+import typeTextAnimate from "./UIAnimations";
 
 //wrapper class for llm functionality
 
@@ -104,7 +105,7 @@ class LLMWrapper{
 
         var llm_result = await this.llm_model.predict(prompt)
 
-        this.set_feedback(llm_result)
+        typeTextAnimate(this.set_feedback, llm_result, 0, 50)
 
     }
 
