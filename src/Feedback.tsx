@@ -35,6 +35,12 @@ const Feedback = (props: any) => {
 
         }
 
+        if (props.game_state.fen() === startFEN) {
+
+            setCurrFeedback("Hi! Welcome to Chesso! Make a move to get started.")
+
+        }
+
     }, [props.engine_calc])
 
     //when a new prompt is created, generate a response for it
