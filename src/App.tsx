@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import logoImg from './resources/images/logo.png'
-import gearsImg from './resources/images/settings-gears.png'
 import { startFEN } from "./constants"
 import ValidatedChessboard from './ValidatedChessboard';
 import ChessOptions from './ChessOptions';
@@ -153,21 +152,12 @@ const App = () => {
           </div>
         </div>
         <div id="feedback_div">
-          {(engineCalculating && (boardPosition != "start")) ? 
-            (
-              <div id="analysePos">
-                <img width={100} src={gearsImg}/>
-                <p className='feedbackText'>Analyzing Position ... </p>
-              </div>
-            ) : 
-            (<Feedback
-              game_state={gameState}
-              game_state_change_signal={boardPosition}
-              curr_score={currEvalScore}
-              prev_score={prevEvalScore}
-              engine_calc={engineCalculating} 
-              />)
-          }
+          <Feedback
+            game_state={gameState}
+            game_state_change_signal={boardPosition}
+            curr_score={currEvalScore}
+            prev_score={prevEvalScore}
+            engine_calc={engineCalculating}/>
         </div>
       </div>
     </div>
