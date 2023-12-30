@@ -117,7 +117,7 @@ class StockfishWrapper{
 
     }
 
-    //terminatee the engine
+    //terminate the engine
     quit_engine() {
         
         this.sf_worker.postMessage("quit")

@@ -25,7 +25,7 @@ const EvalBar = (props: any) => {
 
             }
 
-        } else if (props.mate_on_board != -1) {
+        } else if (props.mate_on_board !== -1) {
 
             //if checkmate on board
             
