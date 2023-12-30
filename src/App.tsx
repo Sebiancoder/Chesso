@@ -124,8 +124,7 @@ const App = () => {
     setMate(-1);
     setSfInit(false);
     setSfReady(false);
-    setEngineCalculating(false);
-    setIsEvalBarVisible(true);
+    on_board_state_change(startFEN)
   }
 
   //undo last move
