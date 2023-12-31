@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Chesso/static/css/main.1e79624d.css",
-    "main.js": "/Chesso/static/js/main.542f2c56.js",
+    "main.js": "/Chesso/static/js/main.4cb41234.js",
     "static/js/787.1b185442.chunk.js": "/Chesso/static/js/787.1b185442.chunk.js",
     "static/media/knight.png": "/Chesso/static/media/knight.10878037cf650cfe32f0.png",
     "static/media/queen.png": "/Chesso/static/media/queen.42bd161ebb1f83570782.png",
@@ -9,11 +9,11 @@
     "static/media/rook.png": "/Chesso/static/media/rook.094837998886a6f64c08.png",
     "index.html": "/Chesso/index.html",
     "main.1e79624d.css.map": "/Chesso/static/css/main.1e79624d.css.map",
-    "main.542f2c56.js.map": "/Chesso/static/js/main.542f2c56.js.map",
+    "main.4cb41234.js.map": "/Chesso/static/js/main.4cb41234.js.map",
     "787.1b185442.chunk.js.map": "/Chesso/static/js/787.1b185442.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1e79624d.css",
-    "static/js/main.542f2c56.js"
+    "static/js/main.4cb41234.js"
   ]
 }
