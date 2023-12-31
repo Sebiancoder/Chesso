@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import gearsImg from './resources/images/settings-gears.png'
 import LLMWrapper from "./llm_wrapper"
 import { startFEN } from "./constants";
-import typeTextAnimate from "./UIAnimations";
 
 const Feedback = (props: any) => {
 
@@ -10,9 +9,7 @@ const Feedback = (props: any) => {
 
     const [prompt, setPrompt] = useState<string>("");
 
-    const [llmWrapper, setLLMWrapper] = useState<LLMWrapper>(
-        new LLMWrapper(setPrompt, setCurrFeedback, 0.8)
-        )
+    const [llmWrapper, setLLMWrapper] = useState<LLMWrapper>(new LLMWrapper(setPrompt, setCurrFeedback, 0.8))
     
     //listen for engine to finish calculating, then generate prompt
     useEffect(() => {
@@ -22,7 +19,6 @@ const Feedback = (props: any) => {
         //if we are not already generating a response, and the stockfish engine has stopped calculating,
         // and we are not in the start position
         if (!props.engine_calc && props.game_state.fen() !== startFEN) {
-        
             
             // generate and set a new prompt
             llmWrapper.generatePrompt(
