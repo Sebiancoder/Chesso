@@ -7,3 +7,9 @@ LLMs, as language models, are not great at playing chess. They have no ability t
 ![alt text](https://github.com/sebiancoder/Chesso/blob/main/chesso.png?raw=true)
 
 In the future, this project will likely be hosted [here](www.sebiancoder.github.io/chesso).
+
+## How does this work?
+
+Chesso works as a sort-of Chess RAG (Retrieval Augmented Generation) System. When the user makes a move and creates a new position, a lookup is performed in a Chess openings book. Specifically, Chesso uses the Encyclopedia of Chess Openings (ECO) data, found [here](https://github.com/hayatbiralem/eco.json). From the database, Chesso recieves the name of the opening and variation, if it exists. That data is then combined with the position FEN itself, as well as the current stockfish evaluation for that position, and fed into the GPT3.5 Turbo model, which is asked to write a short description reviewing the position, given the data from the openings database and the stockfish evaluation.
+
+![alt text](https://github.com/sebiancoder/Chesso/blob/main/chesso_system.png?raw=true)
