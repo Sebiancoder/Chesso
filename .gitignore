@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/build
+
 
 #secrets
 /src/resources/secrets
