@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/www.sebiancoder.github.io/chesso/static/css/main.1e79624d.css",
+    "main.js": "/www.sebiancoder.github.io/chesso/static/js/main.719af81b.js",
+    "static/js/787.1b185442.chunk.js": "/www.sebiancoder.github.io/chesso/static/js/787.1b185442.chunk.js",
+    "static/media/knight.png": "/www.sebiancoder.github.io/chesso/static/media/knight.10878037cf650cfe32f0.png",
+    "static/media/queen.png": "/www.sebiancoder.github.io/chesso/static/media/queen.42bd161ebb1f83570782.png",
+    "static/media/bishop.png": "/www.sebiancoder.github.io/chesso/static/media/bishop.01f55204979daa708a09.png",
+    "static/media/rook.png": "/www.sebiancoder.github.io/chesso/static/media/rook.094837998886a6f64c08.png",
+    "index.html": "/www.sebiancoder.github.io/chesso/index.html",
+    "main.1e79624d.css.map": "/www.sebiancoder.github.io/chesso/static/css/main.1e79624d.css.map",
+    "main.719af81b.js.map": "/www.sebiancoder.github.io/chesso/static/js/main.719af81b.js.map",
+    "787.1b185442.chunk.js.map": "/www.sebiancoder.github.io/chesso/static/js/787.1b185442.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1e79624d.css",
+    "static/js/main.719af81b.js"
+  ]
+}
