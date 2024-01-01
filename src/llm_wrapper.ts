@@ -1,6 +1,4 @@
 import { PromptTemplate } from "langchain/prompts";
-import OAI_KEY from "./resources/secrets/oai_key";
-import { OpenAI } from "langchain/llms/openai";
 import { Dispatch, SetStateAction } from "react";
 import openings from "./resources/openings.json";
 
@@ -9,8 +7,6 @@ import openings from "./resources/openings.json";
 class LLMWrapper{
 
     initialized: boolean = false;
-
-    llm_model: OpenAI;
 
     temperature: number;
 
@@ -35,7 +31,8 @@ class LLMWrapper{
         temperature: number) {
 
         this.temperature = temperature
-        this.llm_model = new OpenAI({openAIApiKey: OAI_KEY})
+
+        console.log(process.env)
 
         this.set_prompt = set_prompt
         this.set_feedback = set_feedback
@@ -123,9 +120,23 @@ class LLMWrapper{
 
     async getLLMResponse(prompt: string) {
 
-        var llm_result = await this.llm_model.predict(prompt)
+        //send request to backend to make openai request
+        
+        var llm_result = await fetch(
+            "http://localhost:4000", {
+                method: "POST",
+                body: JSON.stringify({
+                prompt: prompt
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }   
+            });
 
-        this.set_feedback(llm_result)
+        const response_text: string = await llm_result.text()
+
+        console.log(response_text)
+        this.set_feedback(response_text)
 
     }
 

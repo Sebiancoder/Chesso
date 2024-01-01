@@ -1,7 +1,6 @@
 {
   "name": "chesso",
   "version": "0.1.0",
-  "homepage": "www.sebiancoder.github.io/chesso",
   "private": true,
   "dependencies": {
     "@chrisoakman/chessboardjs": "^1.0.0",
