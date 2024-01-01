@@ -31,7 +31,7 @@ class StockfishWrapper{
         set_mate: Dispatch<SetStateAction<number>>
         ) {
 
-        this.sf_worker = new Worker("/stockfish.js");
+        this.sf_worker = new Worker("stockfish.js");
 
         //set game state variable
         this.game_state = game_state
