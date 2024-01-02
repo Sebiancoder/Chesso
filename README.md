@@ -6,7 +6,7 @@ LLMs, as language models, are not great at playing chess. They have no ability t
 
 ![alt text](https://github.com/sebiancoder/Chesso/blob/main/chesso.png?raw=true)
 
-In the future, this project will likely be hosted [here](www.sebiancoder.github.io/chesso).
+This project is currently deployed [here](www.sebiancoder.github.io/Chesso). Fair warning, the css may not look great on mobile, as that is a work-in-progress.
 
 ## How does this work?
 
