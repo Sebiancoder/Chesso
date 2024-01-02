@@ -5,7 +5,6 @@ import { OpenAI } from "langchain/llms/openai";
 import express from 'express';
 import bodyParser from "body-parser";
 import cors from 'cors';
-import http from 'http';
 
 const app = express()
 
@@ -28,7 +27,7 @@ app.post('/', (req, res) => {
     })
 });
 
-const port = process.env.PORT || 4000; // You can use environment variables for port configuration
+const port = process.env.PORT || 3000; // You can use environment variables for port configuration
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

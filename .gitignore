@@ -9,7 +9,7 @@
 /coverage
 
 #secrets
-/src/resources/secrets
+/backend/OAI_KEY.js
 
 # misc
 .DS_Store
