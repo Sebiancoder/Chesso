@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+#production
+/build
+
 #secrets
 /backend/OAI_KEY.js
 
