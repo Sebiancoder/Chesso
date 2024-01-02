@@ -123,7 +123,7 @@ class LLMWrapper{
         //send request to backend to make openai request
         
         var llm_result = await fetch(
-            "http://localhost:4000", {
+            "https://chesso-backend-4c018fc83529.herokuapp.com/", {
                 method: "POST",
                 body: JSON.stringify({
                 prompt: prompt
