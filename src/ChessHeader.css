@@ -4,8 +4,6 @@
     border-radius: 7px;
     border-width: 1px;
     padding: 5px;
-    width: 480px;
-    margin-left: 200px;
     font-family: "Gill Sans", sans-serif;
     font-size: large;
 }
@@ -17,8 +15,6 @@
     border-color: white;
     color: white;
     padding: 10px;
-    width: 480px;
-    margin-left: 200px;
     font-family: "Gill Sans", sans-serif;
     font-size: large;
 }
@@ -28,8 +24,6 @@
     background-color: gray;
     color: white;
     padding: 10px;
-    width: 480px;
-    margin-left: 200px;
     font-size: large;
 }
 
