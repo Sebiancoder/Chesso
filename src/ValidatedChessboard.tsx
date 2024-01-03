@@ -136,9 +136,9 @@ const ValidatedChessboard = (props: any) => {
         <div>
             <div id="chessInterface">
                 <Chessboard
-                    id="mainChessBoard" 
+                    id="mainChessBoard"
+                    width={window.innerWidth < 950 ? 300 : 500} 
                     position={props.board_pos}
-                    width={500}
                     allowDrag={allowDrag}
                     draggable={!promotionMenuOpen}
                     onDrop={onDrop}/>

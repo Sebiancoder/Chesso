@@ -1,4 +1,5 @@
 import './ChessOptions.css';
+import './App.css'
 import EvalBar from './EvalBar';
 import React, { useEffect, useState} from "react";
 const ChessOptions = (props: any) => {

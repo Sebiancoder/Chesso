@@ -141,13 +141,15 @@ const App = () => {
       </div>
       <div id="main">
         <div id="chessboard_div">
-          <ChessHeader 
-          game_state={gameState} 
-          game_state_change_signal={boardPosition}/>
+          <ChessOptions undo={handleUndo} reset={reset_game} onToggleEvalBar={handleToggleEvalBar} isVisible={isEvalBarVisible}/>
           <div id="chessboardMain">
-            <ChessOptions undo={handleUndo} reset={reset_game} onToggleEvalBar={handleToggleEvalBar} isVisible={isEvalBarVisible}/>
-            <ValidatedChessboard board_pos={boardPosition} set_board_pos={setBoardPosition} game_state={gameState} on_board_position_change={on_board_state_change}/>
-            <EvalBar eval={currEvalScore} mate_on_board={mate} turn={gameState.turn()} mate={gameState.isCheckmate()} isVisible={isEvalBarVisible}/>
+            <ChessHeader 
+            game_state={gameState} 
+            game_state_change_signal={boardPosition}/>
+            <div id="chessAndEval">
+              <ValidatedChessboard board_pos={boardPosition} set_board_pos={setBoardPosition} game_state={gameState} on_board_position_change={on_board_state_change}/>
+              <EvalBar eval={currEvalScore} mate_on_board={mate} turn={gameState.turn()} mate={gameState.isCheckmate()} isVisible={isEvalBarVisible}/>
+            </div>
           </div>
         </div>
         <div id="feedback_div">
