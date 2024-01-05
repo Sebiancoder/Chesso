@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.4953f0b1.css",
-    "main.js": "/static/js/main.c249688d.js",
-    "static/js/787.1b185442.chunk.js": "/static/js/787.1b185442.chunk.js",
-    "static/media/knight.png": "/static/media/knight.10878037cf650cfe32f0.png",
-    "static/media/queen.png": "/static/media/queen.42bd161ebb1f83570782.png",
-    "static/media/bishop.png": "/static/media/bishop.01f55204979daa708a09.png",
-    "static/media/rook.png": "/static/media/rook.094837998886a6f64c08.png",
-    "index.html": "/index.html",
-    "main.4953f0b1.css.map": "/static/css/main.4953f0b1.css.map",
-    "main.c249688d.js.map": "/static/js/main.c249688d.js.map",
-    "787.1b185442.chunk.js.map": "/static/js/787.1b185442.chunk.js.map"
+    "main.css": "/Chesso/static/css/main.4953f0b1.css",
+    "main.js": "/Chesso/static/js/main.cb0fb8b4.js",
+    "static/js/787.1b185442.chunk.js": "/Chesso/static/js/787.1b185442.chunk.js",
+    "static/media/knight.png": "/Chesso/static/media/knight.10878037cf650cfe32f0.png",
+    "static/media/queen.png": "/Chesso/static/media/queen.42bd161ebb1f83570782.png",
+    "static/media/bishop.png": "/Chesso/static/media/bishop.01f55204979daa708a09.png",
+    "static/media/rook.png": "/Chesso/static/media/rook.094837998886a6f64c08.png",
+    "index.html": "/Chesso/index.html",
+    "main.4953f0b1.css.map": "/Chesso/static/css/main.4953f0b1.css.map",
+    "main.cb0fb8b4.js.map": "/Chesso/static/js/main.cb0fb8b4.js.map",
+    "787.1b185442.chunk.js.map": "/Chesso/static/js/787.1b185442.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4953f0b1.css",
-    "static/js/main.c249688d.js"
+    "static/js/main.cb0fb8b4.js"
   ]
 }
